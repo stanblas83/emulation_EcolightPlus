@@ -213,19 +213,28 @@ class TrafficLightDQN:
 
             if not if_pretrain:
                 # update network
+                print("updating")
+                t = time.time()
                 self.agent.update_network(if_pretrain, use_average, current_time)
                 self.agent.update_network_bar()
+                print("updated")
+                time_passed = time.time() - t 
+                print(time_passed)
 
         if if_pretrain:
+            print("updating")
+            t = time.time()
             self.agent.set_update_outdated()
             self.agent.update_network(if_pretrain, use_average, current_time)
             self.agent.update_network_bar()
+            print("updated")
+            time_passed = time.time() - t 
+            print(time_passed)
         self.agent.reset_update_count()
         print("END")
 
 
 def main(memo, f_prefix, noise_model):
-
     player = TrafficLightDQN(memo, f_prefix)
     #player.train(sumo_cmd_pretrain_str, if_pretrain=True, use_average=True)
     player.train( if_pretrain=False, use_average=True, noise_model=noise_model)

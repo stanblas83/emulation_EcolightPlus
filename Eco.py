@@ -52,7 +52,7 @@ for model_name in list_model_name:
     
     for traffic_file, traffic_file_pretrain in list_traffic_files:
 
-        
+        print("toto")
         dic_exp = json.load(open(os.path.join(PATH_TO_CONF, "exp.conf"), "r"))
         
         dic_exp["MODEL_NAME"] = model_name

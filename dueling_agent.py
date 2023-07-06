@@ -6,7 +6,7 @@
 Deep reinforcement learning agent
 
 '''
-
+import time
 import numpy as np
 import keras
 from keras.layers import Input, Dense, Conv2D, Flatten, BatchNormalization, Activation, Multiply, Add
@@ -248,7 +248,6 @@ class DuelingAgent(NetworkAgent):
     def update_network(self, if_pretrain, use_average, current_time):
 
         ''' update Q network '''
-
         if current_time - self.update_outdated < self.para_set.UPDATE_PERIOD:
             return
 
@@ -303,6 +302,7 @@ class DuelingAgent(NetworkAgent):
         self.train_network(Xs, Y, current_time, if_pretrain)
         self.q_bar_outdated += 1
         self.forget(if_pretrain=if_pretrain)
+        
 
     def _sample_memory(self, gamma, with_priority, memory, if_pretrain):
 

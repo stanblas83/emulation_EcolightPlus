@@ -49,7 +49,7 @@ output:
 current_time = 0 
 def get_current_time():
     global current_time 
-    print (current_time)
+    #print (current_time)
     df = pd.read_csv('Sumo_record_data/records_sumo/one_run/m/get_current_time.csv')
     time = df.iloc[current_time,0]  
     current_time += 1
@@ -188,22 +188,6 @@ def changeTrafficLight_7(current_phase=0):  # [WNG_ESG_WSG_ENG_NWG_SEG]
 
 
 
-def get_phase_vector(current_phase=0):
-    phase = phases_light_7[current_phase].split("_")
-    phase_vector = [0] * len(direction_list)
-    for direction in phase:
-        phase_vector[direction_list.index(direction)] = 1
-    return np.array(phase_vector)
-
-
-def getMapOfCertainTrafficLight(curtent_phase=0, tl_node_id=node_light_7, area_length=600):
-    current_phases_light_7 = [phases_light_7[curtent_phase]]
-    parameterArray = phases_affected_lane_postions(phases=current_phases_light_7)
-    length_num_grids = int(area_length / grid_width)
-    resultTrained = np.zeros((length_num_grids, length_num_grids))
-    for affected_road in parameterArray:
-        resultTrained[affected_road[0]:affected_road[1], affected_road[2]:affected_road[3]] = 127
-    return resultTrained
 
 
 
@@ -371,34 +355,6 @@ def update_vehicles_state(dic_vehicles):
     
     return dic_vehicles
 
-def status_calculator():
-    laneQueueTracker=[]
-    laneNumVehiclesTracker=[]
-    laneWaitingTracker=[]
-    #================= COUNT HALTED VEHICLES (I.E. QUEUE SIZE) (12 elements)
-    for lane in listLanes:
-        laneQueueTracker.append(traci.lane.getLastStepHaltingNumber(lane))
-
-    # ================ count vehicles in lane
-    for lane in listLanes:
-        laneNumVehiclesTracker.append(traci.lane.getLastStepVehicleNumber(lane))
-
-    # ================ cum waiting time in minutes
-    for lane in listLanes:
-        laneWaitingTracker.append(traci.lane.getWaitingTime(str(lane)) / 60)
-
-    # ================ get position matrix of vehicles on lanes
-    mapOfCars = getMapOfVehicles(area_length=area_length)
-
-    if not os.path.exists("Sumo_record_data/records_sumo/one_run/m/status_calculator.csv"):
-        df = pd.DataFrame(columns = ['laneQueueTracker', 'laneNumVehiclesTracker', 'laneWaitingTracker', 'mapOfCars'])
-        df.to_csv("Sumo_record_data/records_sumo/one_run/m/status_calculator.csv",index=False)
-    data = pd.read_csv("Sumo_record_data/records_sumo/one_run/m/status_calculator.csv")
-    data2 = pd.DataFrame([laneQueueTracker, laneNumVehiclesTracker, laneWaitingTracker, mapOfCars],columns = ['laneQueueTracker', 'laneNumVehiclesTracker', 'laneWaitingTracker', 'mapOfCars'])
-    data3 = pd.concat([data,data2], ignore_index =  True)
-    data3.to_csv("Sumo_record_data/records_sumo/one_run/m/status_calculator.csv",index=False)
-
-    return [laneQueueTracker, laneNumVehiclesTracker, laneWaitingTracker, mapOfCars]
 
 ind_laneQueueTracker = 0
 ind_laneNumVehiclesTracker=0
