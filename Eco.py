@@ -40,10 +40,12 @@ import OHANA
 import pandas as pd
 
 PATH_TO_CONF = "conf/"+setting_memo
-
+t = time.time()
 # Noise Prediction model with data fusion:
 ohana = OHANA.OHANA(pre_train = True, model_weights='noise_par/OHANA.h5',history='noise_par/FinalDataAfter_imputation5n.csv')
-
+tt = time.time()-t
+print('time LSTM')
+print(tt)
 # -------------------------------------Prediction Model------------------------------------------------
    
 sumulation = 'real'
