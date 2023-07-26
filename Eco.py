@@ -86,6 +86,7 @@ for model_name in list_model_name:
         )
 
         traffic_light_dueling.main(memo=setting_memo, f_prefix=prefix, noise_model=ohana)
-
+        print('time LSTM')
+        print(tt)
         print("finished {0}".format(traffic_file))
     print ("finished {0}".format(model_name))
