@@ -149,6 +149,7 @@ class TrafficLightDQN:
         
         
         # start experiment
+        t=time.time()
         while current_time < total_run_cnt:
             if if_pretrain:
                 if current_time > pre_train_count_per_ratio:
@@ -166,6 +167,7 @@ class TrafficLightDQN:
             f_memory = open(file_name_memory, "a")
 
             # get state
+            start_time = time.time()
             state = s_agent.get_observation()
             state = self.agent.get_state(state, current_time)
 
@@ -198,7 +200,10 @@ class TrafficLightDQN:
                             state.cur_phase[0][0],
                             state.next_phase[0][0],
                             reward, repr(q_values), sum(state.co2[0]),sum(state.fuel[0]), sum(state.current_noise[0]),statistics.mean(state.waiting_time[0]))
-    
+            end_time = time.time()
+            total_time = end_time - start_time
+            print("time")
+            print(total_time)
 #             self.show_RAM_usage()
     
     
@@ -210,6 +215,9 @@ class TrafficLightDQN:
             f_memory.write(memory_str + "\n")
             f_memory.close()
             current_time = s_agent.get_current_time()  # in seconds
+            tt = time.time()-t
+            print('duration')
+            print(tt)
 
             if not if_pretrain:
                 # update network

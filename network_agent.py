@@ -11,7 +11,7 @@ Network agent from agent.py
 import numpy as np
 from keras.layers import Input, Dense, Conv2D, Flatten, BatchNormalization, Activation, Multiply, Add
 from keras.models import Model, model_from_json, load_model
-from keras.optimizers import RMSprop, Adam
+from tensorflow.keras.optimizers import RMSprop, Adam
 from keras.layers.core import Dropout
 from keras.layers.pooling import MaxPooling2D
 from keras import backend as K
